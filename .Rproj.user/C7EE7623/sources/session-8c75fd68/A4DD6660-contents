@@ -1,0 +1,37 @@
+# Load the dataset
+dataset <- read.csv("dataset1.csv")
+
+# Rename columns with simpler names
+names(dataset) <- c("Country", "Total_payment", "Income_tax", "Employee_social_security_contributions", "Gross_wage_earnings", "Wages_earning_After_Taxes", "Tax_amount")
+
+# Calculate Total_payment(%)
+dataset$Total_payment <- dataset$Income_tax + dataset$Employee_social_security_contributions
+
+# Create the bar graph
+p <- ggplot(dataset, aes(x = reorder(Country, Total_payment), y = Total_payment, 
+                         text = paste(Country, "<br>",
+                                      "Total Payment (%)<br>",
+                                      Total_payment, "%"))) +
+  geom_bar(stat = "identity", aes(fill = "Total Payment (%)")) +
+  geom_bar(stat = "identity", aes(y = Income_tax, fill = "Income Tax (%)",
+                                  text = paste(Country, "<br>",
+                                               "Income Tax (%)<br>",
+                                               Income_tax, "%"))) +
+  geom_bar(stat = "identity", aes(y = Employee_social_security_contributions, fill = "Employee Social Security Contributions (%)",
+                                  text = paste(Country, "<br>",
+                                               "Employee Social Security Contributions (%)<br>",
+                                               Employee_social_security_contributions, "%"))) +
+  scale_fill_manual(values = c("Total Payment (%)" = "#7B68EE", "Income Tax (%)" = "#FFA07A", "Employee Social Security Contributions (%)" = "#20B2AA")) +
+  labs(title = "Income Tax and Employee Social Security Contributions by Country",
+       x = "Country",
+       y = "Percentage (%)",
+       fill = "") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  theme(legend.position = "top") +
+  guides(fill = guide_legend(title = "Type of Tax")) 
+
+# Add interactivity using plotly
+p <- ggplotly(p, tooltip = "text")
+
+# Display the plot
+p

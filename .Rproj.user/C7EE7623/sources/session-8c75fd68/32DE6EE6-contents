@@ -1,0 +1,11 @@
+# Load necessary library
+library(ggplot2)
+
+# Create bar plot
+ggplot(data = dataset, aes(x = reorder(Country, -Total_payment), y = Total_payment)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Total Payment as % of Gross Wage Earnings by Country",
+       x = "Country",
+       y = "Total Payment (%)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()

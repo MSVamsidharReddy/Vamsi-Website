@@ -1,0 +1,37 @@
+# Load necessary library
+library(ggplot2)
+
+# Create bar plot
+ggplot(data = dataset, aes(x = reorder(Country, -Total_payment), y = Total_payment)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Total Payment as % of Gross Wage Earnings by Country",
+       x = "Country",
+       y = "Total Payment (%)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Create scatter plot
+ggplot(data = dataset, aes(x = Income_tax, y = Employee_social_security_contributions, label = Country)) +
+  geom_point(color = "blue") +
+  geom_text(nudge_x = 0.5, nudge_y = 0.5) +
+  labs(title = "Income Tax vs. Social Security Contributions by Country",
+       x = "Income Tax (%)",
+       y = "Social Security Contributions (%)")
+
+# Filter OECD countries
+oecd_countries <- dataset[dataset$Country != "OECD Average",]
+
+# Create box plot
+ggplot(data = oecd_countries, aes(x = "", y = Wages_earning_After_Taxes)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(title = "Wages Earning After Taxes in OECD Countries",
+       x = "",
+       y = "Wages Earning After Taxes (USD)")
+
+# Create histogram
+ggplot(data = dataset, aes(x = Gross_wage_earnings)) +
+  geom_histogram(fill = "orange", bins = 10) +
+  labs(title = "Distribution of Gross Wage Earnings",
+       x = "Gross Wage Earnings (USD)",
+       y = "Frequency")
+

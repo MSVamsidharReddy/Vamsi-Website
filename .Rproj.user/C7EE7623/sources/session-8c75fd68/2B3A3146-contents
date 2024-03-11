@@ -1,0 +1,43 @@
+
+# Load necessary libraries
+library(ggplot2)
+library(plotly)
+library(dplyr)
+
+# Read the CSV file
+d <- read.csv("dataset.csv", stringsAsFactors = FALSE)
+
+# Convert Tax_amount column to numeric
+d$Tax_amount <- as.numeric(gsub(",", "", d$Tax_amount))
+
+# Sort the data by Tax_amount in ascending order
+d_sorted <- d[order(d$Tax_amount), ]
+
+# Define visually pleasing colors for each country
+country_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", 
+                    "#bcbd22", "#17becf", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", 
+                    "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#393b79", "#ff9896", "#aec7e8", "#17becf", 
+                    "#ffbb78", "#98df8a", "#ff7f0e", "#7f7f7f", "#c49c94", "#2ca02c", "#9467bd", "#8c564b", 
+                    "#e377c2", "#1f77b4", "#d62728", "#7fc97f")  
+
+# Create a ggplot object
+gg <- ggplot(d_sorted, aes(x = reorder(Country, Tax_amount), y = Tax_amount, fill = Country, 
+                           text = paste( Country, "<br>Tax Amount:", Tax_amount))) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = Tax_amount, y = Tax_amount), 
+            vjust = -0.5, size = 3, position = position_nudge(y = 500), 
+            color = country_colors, fontface = "bold") +  # Place Tax_amount on top of the bar with a gap
+  scale_fill_manual(values = country_colors) +
+  labs(title = "Tax Amount by Country (Ascending Order)",
+       x = "Country",
+       y = "Tax Amount") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+# Convert ggplot object to plotly object
+R <- ggplotly(gg, tooltip = c("text"))
+
+# Print the plot
+R
+
+

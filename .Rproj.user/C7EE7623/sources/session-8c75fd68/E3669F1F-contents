@@ -1,0 +1,28 @@
+
+
+# Load necessary libraries
+library(ggplot2)
+library(plotly)
+library(dplyr)
+
+# Assuming the dataset has already been loaded and manipulated correctly
+
+# Reshape the data for easier plotting
+data <- dataset1 %>%
+  select(Country, Gross_wage_earnings, Wages_earning_After_Taxes) %>%
+  pivot_longer(cols = c(Gross_wage_earnings, Wages_earning_After_Taxes), names_to = "Earnings_Type", values_to = "Amount")
+
+# Create the ggplot
+q <- ggplot(data, aes(x = Country, y = Amount, fill = Earnings_Type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("Gross_wage_earnings" = "#69b3a2", "Wages_earning_After_Taxes" = "#404080")) +
+  labs(title = "Gross Wage Earnings vs. Wages Earning After Taxes by Country",
+       x = "Country",
+       y = "Amount") +
+  theme(axis.text.x = element_text(angle = 65, vjust = 0.6))
+
+# Convert ggplot object to plotly for interactivity
+p_interactive <- ggplotly(q)
+
+# Show the plot
+p_interactive
