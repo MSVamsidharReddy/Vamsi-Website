@@ -3,7 +3,7 @@
     "path": "~/Desktop/Vamsi Website/More.qmd",
     "project_path": "More.qmd",
     "type": "quarto_markdown",
-    "hash": "2325164901",
+    "hash": "2131766300",
     "contents": "",
     "dirty": false,
     "created": 1710181228661.0,
@@ -19,14 +19,14 @@
         "rmdVisualCollapsedChunks": "",
         "cursorPosition": "0,0",
         "scrollLine": "0",
-        "rmdVisualModeLocation": "188:0"
+        "rmdVisualModeLocation": "471:69"
     },
     "folds": "",
-    "lastKnownWriteTime": 1710181875,
+    "lastKnownWriteTime": 1710187053,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1710181875117,
+    "last_content_update": 1710187053676,
     "read_only": false,
     "read_only_alternatives": []
 }
